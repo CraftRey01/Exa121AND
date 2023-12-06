@@ -1,0 +1,74 @@
+import java.util.*;
+
+class Impresora {
+    int codigo;
+    String marca;
+    double precio;
+    String industria;
+
+    public Impresora(int codigo, String marca, double precio, String industria) {
+        this.codigo = codigo;
+        this.marca = marca;
+        this.precio = precio;
+        this.industria = industria;
+    }
+}
+
+class Sucursal {
+    int num;
+    String direccion;
+    Stack<Impresora> impresoras;
+
+    public Sucursal(int num, String direccion) {
+        this.num = num;
+        this.direccion = direccion;
+        this.impresoras = new Stack<>();
+    }
+
+    public void agregarImpresora(Impresora impresora) {
+        impresoras.push(impresora);
+    }
+}
+
+class Responsable {
+    int carnet;
+    String nombre;
+
+    public Responsable(int carnet, String nombre) {
+        this.carnet = carnet;
+        this.nombre = nombre;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Crear algunas impresoras, sucursales y responsables (ejemplos)
+        Impresora impresora1 = new Impresora(1, "Epson", 300.0, "Oficina");
+        Impresora impresora2 = new Impresora(2, "HP", 250.0, "Doméstica");
+
+        Sucursal sucursal1 = new Sucursal(101, "Calle A");
+        sucursal1.agregarImpresora(impresora1);
+        sucursal1.agregarImpresora(impresora2);
+
+        Sucursal sucursal2 = new Sucursal(102, "Calle B");
+        sucursal2.agregarImpresora(impresora1);
+
+        Responsable responsable1 = new Responsable(123, "Juan");
+        Responsable responsable2 = new Responsable(124, "Maria");
+
+        // Asignar responsables a sucursales (asumiendo que cada sucursal tiene un responsable)
+        sucursal1.responsable = responsable1;
+        sucursal2.responsable = responsable2;
+
+        // Encontrar la sucursal con más impresoras
+        Sucursal sucursalConMasImpresoras = encontrarSucursalConMasImpresoras(sucursal1, sucursal2);
+
+        // Imprimir el responsable de la sucursal con más impresoras
+        System.out.println("El responsable de la sucursal con más impresoras es: " +
+                           sucursalConMasImpresoras.responsable.nombre);
+    }
+
+    public static Sucursal encontrarSucursalConMasImpresoras(Sucursal sucursal1, Sucursal sucursal2) {
+        return sucursal1.impresoras.size() > sucursal2.impresoras.size() ? sucursal1 : sucursal2;
+    }
+}
